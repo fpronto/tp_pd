@@ -1,19 +1,18 @@
-const rootUrl = "https://localhost:8081";
+const rootUrl = "http://localhost:8081";
 
 const options = (method, body) => ({
   method: method,
   headers: { "Content-Type": "application/json" },
-  mode: "cors",
-  cache: "no-cache",
   body: body ? JSON.stringify(body) : undefined,
 });
 
 export default {
   methods: {
-    getNotes: () => fetch(`${rootUrl}/posts`, options("get")),
-    postNote: (note) => fetch(`${rootUrl}/posts`, options("post", { note })),
+    getNote: (id) => fetch(`${rootUrl}/documents/${id}`, options("GET")),
+    getNotes: () => fetch(`${rootUrl}/documents`, options("GET")),
+    postNote: (note) => fetch(`${rootUrl}/documents`, options("POST", note)),
     putNote: (id, note) =>
-      fetch(`${rootUrl}/posts/${id}`, options("put", { note })),
-    deleteNote: (id) => fetch(`${rootUrl}/posts${id}`, options("delete")),
+      fetch(`${rootUrl}/documents/${id}`, options("PUT", note)),
+    deleteNote: (id) => fetch(`${rootUrl}/documents/${id}`, options("DELETE")),
   },
 };

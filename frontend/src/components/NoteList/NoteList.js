@@ -21,7 +21,7 @@ const NoteList = (props) => {
           key={i}
           editNote={editNote}
           deleteNote={deleteNote}
-          item={{ ...note, key: i }}
+          item={note}
         />
       ))}
     </div>

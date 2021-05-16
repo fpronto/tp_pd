@@ -7,6 +7,7 @@ import {
   Cancel as CancelIcon,
 } from "@material-ui/icons";
 import { get } from "lodash";
+import sdk from "../../sdk/sdk";
 
 import useStyles from "./NoteItem.styles.js";
 
@@ -16,8 +17,14 @@ const NoteItem = ({ item, editNote, deleteNote, opened }) => {
   const [content, setContent] = useState(get(item, "content", ""));
 
   useEffect(() => {
+    const fetchNoteData = async () => {
+      const results = await sdk.methods.getNote(item.key);
+      const data = await results.json();
+      setTitle(data.title);
+      setContent(data.content);
+    };
     if (editing) {
-      // request ao backend
+      fetchNoteData();
     }
   }, [editing]);
 

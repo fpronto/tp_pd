@@ -5,13 +5,8 @@ import Note from "./components/Note";
 import sdk from "./sdk/sdk";
 
 import "./App.css";
-const initialValuesForNotes = [
-  { title: "1", content: "1" },
-  { title: "2", content: "2" },
-  { title: "3", content: "3" },
-  { title: "4", content: "4" },
-  { title: "5", content: "5" },
-];
+const initialValuesForNotes = [];
+
 const App = () => {
   const [notes, setNotes] = useState(initialValuesForNotes);
   const [open, setOpen] = useState(false);
@@ -20,35 +15,56 @@ const App = () => {
   const fetchData = async () => {
     try {
       const results = await sdk.methods.getNotes();
+      if (results.status > 300) {
+        throw new Error("Status not expected");
+      }
       const jsons = await results.json();
       return {
         statusCode: 200,
-        notes: jsons.map((json) => ({ title: json.title, content: json.body })),
+        notes: jsons.map((json) => ({
+          key: json._id,
+          title: json.title,
+          content: json.content,
+        })),
       };
     } catch (err) {
       return { statusCode: 400, error: err.message };
     }
   };
 
-  const postData = async () => {
+  const postData = async (savingNote) => {
     try {
-      const results = await sdk.methods.postNote();
+      const results = await sdk.methods.postNote(savingNote);
+      if (results.status > 300) {
+        throw new Error("Status not expected");
+      }
       const jsons = await results.json();
       return { statusCode: 200 };
     } catch (err) {
       return { statusCode: 400, error: err.message };
     }
   };
-  const putData = async () => {
+
+  const putData = async (savingNote) => {
     try {
+      const results = await sdk.methods.putNote(savingNote.key, savingNote);
+      if (results.status > 300) {
+        throw new Error("Status not expected");
+      }
+      const jsons = await results.json();
       return { statusCode: 200 };
     } catch (err) {
       return { statusCode: 400, error: err.message };
     }
   };
 
-  const deleteData = async () => {
+  const deleteData = async (id) => {
     try {
+      const results = await sdk.methods.deleteNote(id);
+      if (results.status > 300) {
+        throw new Error("Status not expected");
+      }
+      const jsons = await results.json();
       return { statusCode: 200 };
     } catch (err) {
       return { statusCode: 400, error: err.message };
@@ -76,11 +92,11 @@ const App = () => {
   };
 
   const handleSave = (savingNote) => {
-    const noteExists = notes.findIndex((note, i) => savingNote.key === i);
+    const noteExists = notes.findIndex((note) => savingNote.key === note.key);
     if (noteExists >= 0) {
       setNotes(
-        notes.map((note, i) => {
-          if (i === savingNote.key) {
+        notes.map((note) => {
+          if (note.key === savingNote.key) {
             return { title: savingNote.title, content: savingNote.content };
           }
           return note;
@@ -94,21 +110,30 @@ const App = () => {
     }
   };
 
-  const handleNoteSave = (savingNote) => {
+  const handleNoteSave = async (savingNote) => {
     handleClose();
-    handleSave(savingNote);
+    const result = await postData(savingNote);
+    if (result.statusCode === 200) {
+      handleSave(savingNote, "POST");
+    }
   };
 
   const addNote = (values = { title: "", content: "" }) => {
     handleClickOpen({ ...values, key: notes.length });
   };
 
-  const editNote = (savingNote) => {
-    handleSave(savingNote);
+  const editNote = async (savingNote) => {
+    const result = await putData(savingNote);
+    if (result.statusCode === 200) {
+      handleSave(savingNote);
+    }
   };
 
-  const deleteNote = (key) => {
-    setNotes(notes.filter((note, i) => i !== key));
+  const deleteNote = async (key) => {
+    const result = await deleteData(key);
+    if (result.statusCode === 200) {
+      setNotes(notes.filter((note) => note.key !== key));
+    }
   };
 
   return (
