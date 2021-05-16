@@ -6,11 +6,11 @@ import sdk from "./sdk/sdk";
 
 import "./App.css";
 const initialValuesForNotes = [
-  { title: "1", value: "1" },
-  { title: "2", value: "2" },
-  { title: "3", value: "3" },
-  { title: "4", value: "4" },
-  { title: "5", value: "5" },
+  { title: "1", content: "1" },
+  { title: "2", content: "2" },
+  { title: "3", content: "3" },
+  { title: "4", content: "4" },
+  { title: "5", content: "5" },
 ];
 const App = () => {
   const [notes, setNotes] = useState(initialValuesForNotes);
@@ -23,7 +23,7 @@ const App = () => {
       const jsons = await results.json();
       return {
         statusCode: 200,
-        notes: jsons.map((json) => ({ title: json.title, value: json.body })),
+        notes: jsons.map((json) => ({ title: json.title, content: json.body })),
       };
     } catch (err) {
       return { statusCode: 400, error: err.message };
@@ -56,7 +56,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    const value = fetchData();
+    const callFunctionFetchData = async () => {
+      const value = await fetchData();
+      if (value.statusCode === 200) {
+        setNotes(value.notes);
+      }
+    };
+    callFunctionFetchData();
   }, []);
 
   const handleClickOpen = (note) => {
@@ -70,13 +76,12 @@ const App = () => {
   };
 
   const handleSave = (savingNote) => {
-    handleClose();
     const noteExists = notes.findIndex((note, i) => savingNote.key === i);
     if (noteExists >= 0) {
       setNotes(
         notes.map((note, i) => {
           if (i === savingNote.key) {
-            return { title: savingNote.title, value: savingNote.value };
+            return { title: savingNote.title, content: savingNote.content };
           }
           return note;
         })
@@ -84,17 +89,22 @@ const App = () => {
     } else {
       setNotes([
         ...notes,
-        { title: savingNote.title, value: savingNote.value },
+        { title: savingNote.title, content: savingNote.content },
       ]);
     }
   };
 
-  const addNote = (values = { title: "", value: "" }) => {
+  const handleNoteSave = (savingNote) => {
+    handleClose();
+    handleSave(savingNote);
+  };
+
+  const addNote = (values = { title: "", content: "" }) => {
     handleClickOpen({ ...values, key: notes.length });
   };
 
-  const editNote = (key) => {
-    handleClickOpen({ ...notes[key], key });
+  const editNote = (savingNote) => {
+    handleSave(savingNote);
   };
 
   const deleteNote = (key) => {
@@ -109,7 +119,7 @@ const App = () => {
         noteToEdit={noteToEdit}
         open={open}
         handleClose={handleClose}
-        handleSave={handleSave}
+        handleSave={handleNoteSave}
       />
     </div>
   );

@@ -11,11 +11,11 @@ import {
 
 const Note = ({ open, handleClose, handleSave, noteToEdit }) => {
   const [title, setTitle] = useState(get(noteToEdit, "title", ""));
-  const [content, setContent] = useState(get(noteToEdit, "value", ""));
+  const [content, setContent] = useState(get(noteToEdit, "content", ""));
   useEffect(() => {
     if (open === true) {
       setTitle(get(noteToEdit, "title", ""));
-      setContent(get(noteToEdit, "value", ""));
+      setContent(get(noteToEdit, "content", ""));
     } else {
       setTitle("");
       setContent("");
@@ -62,7 +62,7 @@ const Note = ({ open, handleClose, handleSave, noteToEdit }) => {
           <Button
             disabled={title === "" || content === ""}
             onClick={() => {
-              handleSave({ ...noteToEdit, title, value: content });
+              handleSave({ ...noteToEdit, title, content });
             }}
             color="primary"
           >

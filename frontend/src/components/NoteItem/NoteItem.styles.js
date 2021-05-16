@@ -20,7 +20,28 @@ const useStyles = makeStyles((theme) => ({
   contentItems: {
     margin: "0rem 1rem 0rem 0rem",
   },
+  editingNote: {
+    position: "relative",
+    width: "100%",
+  },
+  editingTextFields: {},
   editButton: {},
+  editingModeButtons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    bottom: 0,
+    right: 0,
+  },
+  topEditingButtons: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+    top: 0,
+    right: 0,
+  },
 }));
 
 export default useStyles;
