@@ -1,4 +1,5 @@
 const express = require("express");
+const { join } = require("path");
 const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
@@ -12,10 +13,6 @@ app.use(express.json({ limit: "50mb" }));
 
 require("./Schemas/Document");
 const Document = mongoose.model("documents");
-
-app.get("/", (req, res) => {
-  res.redirect("/documents");
-});
 
 app.get("/documents", async (req, res) => {
   const documents = await Document.find();
@@ -81,6 +78,9 @@ app.delete("/documents/:id", async (req, res) => {
   const document = await Document.findOneAndDelete({ _id: req.params.id });
   res.status(200).json(document);
 });
+
+//setting middleware
+app.use(express.static(join(__dirname, "build"))); //Serves resources from public folder
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

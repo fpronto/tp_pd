@@ -1,7 +1,7 @@
 const rootUrl = "http://localhost:8081";
 
 const options = (method, body) => ({
-  method: method,
+  method,
   headers: { "Content-Type": "application/json" },
   body: body ? JSON.stringify(body) : undefined,
 });

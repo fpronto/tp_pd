@@ -1,0 +1,20 @@
+{
+  "name": "tp_pd",
+  "version": "1.0.0",
+  "description": "Trabalho Prático PD",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "cd backend && npm i && cd ../frontend && npm i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpronto/tp_pd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fpronto/tp_pd/issues"
+  },
+  "homepage": "https://github.com/fpronto/tp_pd#readme"
+}
