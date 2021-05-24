@@ -4,7 +4,7 @@ const app = express();
 const cors = require("cors");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/tp_pd", { useNewUrlParser: true });
+mongoose.connect("mongodb://mongodb:27017/tp_pd", { useNewUrlParser: true });
 
 app.use(morgan("common"));
 app.use(cors());
