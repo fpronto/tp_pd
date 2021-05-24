@@ -82,7 +82,7 @@ app.delete("/documents/:id", async (req, res) => {
 //setting middleware
 app.use(express.static(join(__dirname, "build"))); //Serves resources from public folder
 
-const PORT = process.env.PORT || 8081;
+const PORT = 8081;
 app.listen(PORT, () => {
   console.log(`App running at http://localhost:${PORT}`);
 });
