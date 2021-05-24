@@ -1,6 +1,21 @@
 ---
 -
   hosts: localhost
+  vars:
+  - docker_image_name: "ajfp/tp-pd"
+  - docker_container_name: "notepad"
   tasks:
     -
       debug: msg=Hello
+      
+    - name: "Build docker image from DockerHub"
+      docker_image:
+         name: "{{docker_image_name}}"
+         state: present
+         
+    - name: "Launch docker container"
+      docker_container:
+         name: "{{docker_container_name}}"
+         image: "{{docker_image_name}}"
+         state: started
+      register: docker_info
