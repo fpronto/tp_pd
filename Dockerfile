@@ -1,6 +1,8 @@
 FROM node:14
 WORKDIR /app
-ADD . /app
+COPY package*.json ./app
 RUN npm install
+COPY . .
 EXPOSE 3000
-CMD [ "npm", "start" ]
+WORKDIR /app/backend
+CMD ["npm", "start"]
