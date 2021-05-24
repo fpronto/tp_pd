@@ -17,7 +17,9 @@
       docker_container:
          name: "{{docker_container_name}}"
          image: "{{docker_image_name}}"
-         state: started
          ports:
           - "127.0.0.1:8081:8081"
+         links:
+          - "mongodb:db"
+         state: started
       register: docker_info
