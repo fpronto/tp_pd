@@ -39,7 +39,7 @@ const App = () => {
         throw new Error("Status not expected");
       }
       const jsons = await results.json();
-      return { statusCode: 200 };
+      return { statusCode: 200, data: jsons };
     } catch (err) {
       return { statusCode: 400, error: err.message };
     }
@@ -52,7 +52,7 @@ const App = () => {
         throw new Error("Status not expected");
       }
       const jsons = await results.json();
-      return { statusCode: 200 };
+      return { statusCode: 200, data: jsons };
     } catch (err) {
       return { statusCode: 400, error: err.message };
     }
@@ -97,7 +97,11 @@ const App = () => {
       setNotes(
         notes.map((note) => {
           if (note.key === savingNote.key) {
-            return { title: savingNote.title, content: savingNote.content };
+            return {
+              title: savingNote.title,
+              content: savingNote.content,
+              key: savingNote.key,
+            };
           }
           return note;
         })
@@ -105,7 +109,11 @@ const App = () => {
     } else {
       setNotes([
         ...notes,
-        { title: savingNote.title, content: savingNote.content },
+        {
+          title: savingNote.title,
+          content: savingNote.content,
+          key: savingNote.key,
+        },
       ]);
     }
   };
@@ -113,6 +121,7 @@ const App = () => {
   const handleNoteSave = async (savingNote) => {
     handleClose();
     const result = await postData(savingNote);
+    savingNote.key = result.data._id;
     if (result.statusCode === 200) {
       handleSave(savingNote, "POST");
     }
