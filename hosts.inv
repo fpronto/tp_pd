@@ -1,2 +1,2 @@
 [students]
-localhost
+localhost ansible_connection=local
