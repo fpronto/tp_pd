@@ -8,6 +8,7 @@
   - docker_container_name: "notepad"
   - docker_mongo_container_name: "mongodb"
   - docker_mongo_image_name: "mongo"
+  - docker_compose_version: "1.29.1"
   tasks:
     -
       debug: msg=Hello
@@ -54,10 +55,20 @@
       pip:
        name: docker
       when: is_docker_install.rc != 0
+      
+    - name: "Run and enable docker"
+      service:
+        name: docker
+        state: started
+        enabled: true
 
 
     - name: "Install docker-compose if necessary"
-      shell:
+      get_url:
+        url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+        dest: /usr/local/bin/docker-compose
+        mode: 'a+x'
+        force: yes
       when: is_docker_compose_install.rc != 0
 
     - name: "Check if already has mongo image"
