@@ -1,2 +1,2 @@
 [students]
-localhostAlex ansible_ssh_host=localhost ansible_ssh_user=alex ansible_ssh_pass=12345 ansible_sudo_pass=12345
+localhostAlex ansible_ssh_host=127.0.0.1 ansible_ssh_port=2222 ansible_ssh_user=alex ansible_ssh_pass=12345 ansible_sudo_pass=12345
