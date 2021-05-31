@@ -95,7 +95,7 @@
       docker_image:
         state: absent
         name: "{{docker_image_name}}"
-        force: yes
+        force_absent: yes
       
     - name: "Pull docker image from DockerHub"
       docker_image:
