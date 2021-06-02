@@ -100,9 +100,9 @@
     - name: "Pull docker image from DockerHub"
       docker_image:
          name: "{{docker_image_name}}"
+         tag: "{{BUILD_NUMBER}}"
          state: present
          source: pull
-         tag: "{{BUILD_NUMBER}}"
          
     - name: "Launch docker container"
       docker_container:
