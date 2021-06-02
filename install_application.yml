@@ -92,10 +92,8 @@
          state: absent
 
     - name: "Remove notepad Image"
-      docker_image:
-        state: absent
-        name: "{{docker_image_name}}"
-        force_absent: yes
+      shell: docker rmi $(docker images ajfp/tp-pd)
+      ignore_errors: yes
       
     - name: "Pull docker image from DockerHub"
       docker_image:
