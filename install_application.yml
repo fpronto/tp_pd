@@ -102,6 +102,7 @@
          name: "{{docker_image_name}}"
          state: present
          source: pull
+         tag: "{{BUILD_NUMBER}}"
          
     - name: "Launch docker container"
       docker_container:
