@@ -1,2 +1,3 @@
 [students]
 localhostAlex ansible_ssh_host=10.0.2.15 ansible_ssh_user=alex ansible_ssh_pass=12345 ansible_sudo_pass=12345
+localhostMicka ansible_ssh_host=10.0.2.15 ansible_ssh_user=mickael ansible_ssh_pass=12345 ansible_sudo_pass=12345
