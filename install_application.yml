@@ -4,7 +4,6 @@
   hosts: students
   become: yes
   vars:
-  - docker_image_name: "ajfp/tp-pd"
   - docker_container_name: "notepad"
   - docker_mongo_container_name: "mongodb"
   - docker_mongo_image_name: "mongo"
