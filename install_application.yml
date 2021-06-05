@@ -92,12 +92,12 @@
          state: absent
 
     - name: "Remove notepad Image"
-      shell: docker rmi $(docker images ajfp/tp-pd)
+      shell: docker rmi $(docker images {{DOCKER_IMAGE_NAME}})
       ignore_errors: yes
       
     - name: "Pull docker image from DockerHub"
       docker_image:
-         name: "{{docker_image_name}}"
+         name: "{{DOCKER_IMAGE_NAME}}"
          tag: "{{BUILD_NUMBER}}"
          state: present
          source: pull
@@ -105,7 +105,7 @@
     - name: "Launch docker container"
       docker_container:
          name: "{{docker_container_name}}"
-         image: "{{docker_image_name}}:{{BUILD_NUMBER}}"
+         image: "{{DOCKER_IMAGE_NAME}}:{{BUILD_NUMBER}}"
          ports:
           - "127.0.0.1:8081:8081"
          links:
