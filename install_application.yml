@@ -91,7 +91,7 @@
          state: absent
 
     - name: "Remove notepad Image"
-      shell: docker rmi $(docker images {{DOCKER_IMAGE_NAME}})
+      shell: "docker rmi $(docker images {{DOCKER_IMAGE_NAME}})"
       ignore_errors: yes
       
     - name: "Pull docker image from DockerHub"
