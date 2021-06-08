@@ -55,6 +55,13 @@
        name: docker
       when: is_docker_install.rc != 0
       
+    - name: Install python3-docker
+      apt:
+        name: python3-docker
+        state: present
+        force_apt_get: yes
+      ignore_errors: yes
+      
     - name: "Run and enable docker"
       service:
         name: docker
