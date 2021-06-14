@@ -28,7 +28,7 @@ const Note = ({ open, handleClose, handleSave, noteToEdit }) => {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Edit Note</DialogTitle>
+        <DialogTitle id="form-dialog-title">New Note</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
